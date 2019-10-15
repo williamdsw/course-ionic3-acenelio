@@ -27,10 +27,11 @@ export class HomePage
   // Declaracao de metodo public
   public login () 
   {
-    this.authService.authenticate(this.credenciaisDto).subscribe(
+    this.authService.authenticate (this.credenciaisDto).subscribe (
       response => 
       {
-        console.log(response.headers.get("Authorization"));
+        let authorization = response.headers.get ("Authorization");
+        this.authService.successfulLogin (authorization);
 
         // Todo elemento tem que ser acessado pelo 'this'
         this.navCtrl.setRoot('CategoriasPage');
