@@ -7,16 +7,18 @@
 
   <form>
 
+    <!-- [(ngModel)]="campo" = Faz o binding de dados, necessario o atributo "NAME" -->
+
     <!-- Email -->
     <ion-item>
       <ion-label stacked> Email: </ion-label>
-      <ion-input type="text" ></ion-input>
+      <ion-input  type="text" name="email" [(ngModel)]="credenciaisDto.email"></ion-input>
     </ion-item>
 
     <!-- Password -->
     <ion-item>
       <ion-label stacked> Senha: </ion-label>
-      <ion-input type="password" ></ion-input>
+      <ion-input type="password" name="senha" [(ngModel)]="credenciaisDto.senha"></ion-input>
     </ion-item>
 
     <!-- Submit -->
