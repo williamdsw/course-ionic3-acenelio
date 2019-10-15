@@ -2,7 +2,7 @@
 <ion-header>
   <ion-navbar>
 
-    <!-- -->
+    <!-- Botao de Menu Lateral -->
     <button ion-button menuToggle>
       <ion-icon name="menu"></ion-icon>
     </button>
@@ -11,5 +11,17 @@
 </ion-header>
 
 <ion-content padding>
-  <p> Página de Categorias </p>
+  
+  <ion-list>
+
+    <!-- *ngFor = Diretiva do Angular utilizada para iterar uma colecao -->
+    <button ion-item *ngFor="let item of items">
+      <ion-thumbnail item-start>
+        <img src="{{bucketUrl}}/cat{{item.id}}.jpg">
+      </ion-thumbnail>
+
+      <!-- {{ }} = Iterpolacao de dados -->
+      <h2> {{ item.nome }} </h2>
+    </button>
+  </ion-list>
 </ion-content>

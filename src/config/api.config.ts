@@ -1,4 +1,5 @@
 export const API_CONFIG = 
 {
-    baseUrl: "http://localhost:8080"
+    baseUrl: "http://localhost:8080",
+    bucketBaseUrl: "https://s3.console.aws.amazon.com/s3/object/curso-spring-ionic-demo"
 }
