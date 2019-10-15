@@ -6,10 +6,17 @@ import { NavController, IonicPage } from 'ionic-angular';
   selector: 'page-home',
   templateUrl: 'home.html'
 })
-export class HomePage {
-
-  constructor(public navCtrl: NavController) {
+export class HomePage 
+{
+  constructor (public navCtrl: NavController) 
+  {
 
   }
 
+  // Declaracao de metodo public
+  public login ()
+  {
+    // Todo elemento tem que ser acessado pelo 'this'
+    this.navCtrl.setRoot ('CategoriasPage');
+  }
 }
