@@ -1,3 +1,4 @@
+import { AuthService } from './../../services/auth.service';
 import { CredenciaisDTO } from './../../models/credenciais.dto';
 import { Component } from '@angular/core';
 import { NavController, IonicPage } from 'ionic-angular';
@@ -18,18 +19,24 @@ export class HomePage
   };
 
   // Injetando objeto no construtor da classe
-  constructor (public navCtrl: NavController, public menuControler: MenuController) 
-  {
-
-  }
+  constructor (public navCtrl: NavController, 
+               public menuControler: MenuController, 
+               public authService : AuthService) 
+  {}
 
   // Declaracao de metodo public
   public login () 
   {
-    console.log (this.credenciaisDto);
+    this.authService.authenticate(this.credenciaisDto).subscribe(
+      response => 
+      {
+        console.log(response.headers.get("Authorization"));
 
-    // Todo elemento tem que ser acessado pelo 'this'
-    this.navCtrl.setRoot ('CategoriasPage');
+        // Todo elemento tem que ser acessado pelo 'this'
+        this.navCtrl.setRoot('CategoriasPage');
+      },
+      error => { }
+    )
   }
 
   // Quando a pagina entrar
