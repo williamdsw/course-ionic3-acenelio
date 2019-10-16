@@ -18,8 +18,7 @@ export class ProfilePage
                public navParams: NavParams, 
                public storageService: StorageService,
                public clienteService: ClienteService) 
-  {
-  }
+  {}
 
   ionViewDidLoad () 
   {
@@ -32,8 +31,18 @@ export class ProfilePage
           this.clienteDto = response;
           this.getImageIfExists ();
         },
-        error => {}
+        error => 
+        {
+          if (error.status == 403)
+          {
+            this.navCtrl.setRoot ('HomePage');
+          }
+        }
       )
+    }
+    else 
+    {
+      this.navCtrl.setRoot ('HomePage');
     }
   }
 
