@@ -11,5 +11,15 @@
 </ion-header>
 
 <ion-content padding>
-  {{ email }}
+  
+  <!-- Imagem-->
+  <ion-avatar>
+    <!-- [campoHTML] = Indica binding de dados -->
+    <img class="circle" [src]="clienteDto?.imageUrl || 'assets/imgs/avatar-blank.png'">
+  </ion-avatar>
+
+  <!-- Informacoes -->
+  <h2 text-center> {{ clienteDto?.nome }} </h2>
+  <p text-center> {{ clienteDto?.email }} </p>
+
 </ion-content>
