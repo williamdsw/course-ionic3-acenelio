@@ -5,22 +5,23 @@
 </ion-header>
 
 <ion-content padding>
-  <form (ngSubmit)="signupUser (); $event.preventDefault ();" >
+  <form [formGroup]="formGroup" (ngSubmit)="signupUser (); $event.preventDefault ();" >
 
     <!-- NOME -->
+    <!-- formControlName = Outra forma de fazer binding de valores -->
     <ion-item>
       <ion-label stacked> * Nome: </ion-label>
-      <ion-input type="text" name="nome"></ion-input>
+      <ion-input type="text" formControlName="nome"></ion-input>
     </ion-item>
 
     <!-- EMAIL -->
     <ion-item>
       <ion-label stacked> * Email: </ion-label>
-      <ion-input type="text" name="email"></ion-input>
+      <ion-input type="text" formControlName="email"></ion-input>
     </ion-item>
 
     <!-- TIPO DE CLIENTE -->
-    <ion-list radio-group name="tipo">
+    <ion-list radio-group formControlName="tipoCliente">
       <ion-list-header> Tipo de Cliente: </ion-list-header>
       <ion-item>
         <ion-label> Pessoa física </ion-label>
@@ -35,49 +36,49 @@
     <!-- CPF / CNPJ -->
     <ion-item>
       <ion-label stacked> CPF ou CNPJ: </ion-label>
-      <ion-input type="text" name="cpfOuCnpj"></ion-input>
+      <ion-input type="text" formControlName="cpfOuCnpj"></ion-input>
     </ion-item>
 
     <!-- SENHA -->
     <ion-item>
       <ion-label stacked> * Senha: </ion-label>
-      <ion-input type="password" name="senha"></ion-input>
+      <ion-input type="password" formControlName="senha"></ion-input>
     </ion-item>
 
     <!-- LOGRADOURO -->
     <ion-item>
       <ion-label stacked> * Logradouro: </ion-label>
-      <ion-input type="text" name="logradouro"></ion-input>
+      <ion-input type="text" formControlName="logradouro"></ion-input>
     </ion-item>
 
     <!-- NUMERO -->
     <ion-item>
       <ion-label stacked> * Número: </ion-label>
-      <ion-input type="text" name="numero"></ion-input>
+      <ion-input type="text" formControlName="numero"></ion-input>
     </ion-item>
 
     <!-- COMPLEMENTO -->
     <ion-item>
       <ion-label stacked> Complemento: </ion-label>
-      <ion-input type="text" name="complemento"></ion-input>
+      <ion-input type="text" formControlName="complemento"></ion-input>
     </ion-item>
 
     <!-- BAIRRO -->
     <ion-item>
       <ion-label stacked> Bairro: </ion-label>
-      <ion-input type="text" name="bairro"></ion-input>
+      <ion-input type="text" formControlName="bairro"></ion-input>
     </ion-item>
 
     <!-- CEP -->
     <ion-item>
       <ion-label stacked> * CEP: </ion-label>
-      <ion-input type="text" name="cep"></ion-input>
+      <ion-input type="text" formControlName="cep"></ion-input>
     </ion-item>
 
     <!-- TELEFONE 1 -->
     <ion-item>
       <ion-label stacked> * Telefone 1: </ion-label>
-      <ion-input type="text" name="telefone1"></ion-input>
+      <ion-input type="text" formControlName="telefone1"></ion-input>
     </ion-item>
 
     <!-- TELEFONE 2 -->
@@ -89,13 +90,13 @@
     <!-- TELEFONE 3 -->
     <ion-item>
       <ion-label stacked> Telefone 3: </ion-label>
-      <ion-input type="text" name="telefone3"></ion-input>
+      <ion-input type="text" formControlName="telefone3"></ion-input>
     </ion-item>
 
     <!-- ESTADO -->
     <ion-item>
       <ion-label stacked> * Estado: </ion-label>
-      <ion-select name="estadoID" (ionChange)="updateCidades ();">
+      <ion-select formControlName="estadoID" (ionChange)="updateCidades ();">
         <ion-option value="1"> Minas Gerais </ion-option>
         <ion-option value="2"> São Paulo </ion-option>
       </ion-select>
@@ -104,7 +105,7 @@
     <!-- CIDADE -->
     <ion-item>
       <ion-label stacked> * Cidade: </ion-label>
-      <ion-select name="cidadeID">
+      <ion-select formControlName="cidadeID">
         <ion-option value="1"> Uberlândia </ion-option>
         <ion-option value="2"> Campinas </ion-option>
       </ion-select>
