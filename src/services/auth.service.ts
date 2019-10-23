@@ -26,6 +26,17 @@ export class AuthService
         });
     }
 
+    // Atualiza o token
+    refreshToken ()
+    {
+        let url = `${API_CONFIG.baseUrl}/auth/refresh_token`;
+        return this.httpClient.post (url, {}, 
+        {
+            observe: "response",
+            responseType: "text"
+        });
+    }
+
     successfulLogin (authorizationValue : string)
     {
         let newToken = authorizationValue.substring (7);

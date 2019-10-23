@@ -40,7 +40,7 @@ export class HomePage
     )
   }
 
-  // Quando a pagina entrar
+  // Quando a vai pagina entrar
   ionViewWillEnter () 
   {
     this.menuControler.swipeEnable (false);
@@ -50,5 +50,18 @@ export class HomePage
   ionViewDidLeave () 
   {
     this.menuControler.swipeEnable (true);
+  }
+
+  // Quando a pagina entrou
+  ionViewDidEnter ()
+  {
+    this.authService.refreshToken ().subscribe (
+      response =>
+      {
+        let authorization = response.headers.get ("Authorization");
+        this.authService.successfulLogin (authorization);
+        this.navCtrl.setRoot ("CategoriasPage");
+      },
+      error => {})
   }
 }
