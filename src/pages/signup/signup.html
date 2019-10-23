@@ -14,15 +14,26 @@
       <ion-input type="text" formControlName="nome"></ion-input>
     </ion-item>
 
+    <!-- *ngIf = Diretiva que permite verifica valores -->
+    <!-- dirty = Quando o valor campo ja foi modificado -->
+    <!-- errors = Vai ser ativado quando algum dos validators passarem -->
+    <p class="danger" *ngIf="formGroup.controls['nome'].dirty && formGroup.controls['nome'].errors" margin-left>
+      Valor inválido
+    </p>
+
     <!-- EMAIL -->
     <ion-item>
       <ion-label stacked> * Email: </ion-label>
       <ion-input type="text" formControlName="email"></ion-input>
     </ion-item>
 
+    <p class="danger" *ngIf="formGroup.controls['email'].dirty && formGroup.controls['email'].errors" margin-left>
+        Valor inválido
+      </p>
+
     <!-- TIPO DE CLIENTE -->
     <ion-list radio-group formControlName="tipoCliente">
-      <ion-list-header> Tipo de Cliente: </ion-list-header>
+      <ion-list-header> * Tipo de Cliente: </ion-list-header>
       <ion-item>
         <ion-label> Pessoa física </ion-label>
         <ion-radio checked="true" value="1"></ion-radio>
@@ -38,6 +49,10 @@
       <ion-label stacked> CPF ou CNPJ: </ion-label>
       <ion-input type="text" formControlName="cpfOuCnpj"></ion-input>
     </ion-item>
+    
+    <p class="danger" *ngIf="formGroup.controls['cpfOuCnpj'].dirty && formGroup.controls['cpfOuCnpj'].errors" margin-left>
+        Valor inválido
+    </p>
 
     <!-- SENHA -->
     <ion-item>
@@ -45,17 +60,29 @@
       <ion-input type="password" formControlName="senha"></ion-input>
     </ion-item>
 
+    <p class="danger" *ngIf="formGroup.controls['senha'].dirty && formGroup.controls['senha'].errors" margin-left>
+        Valor inválido
+    </p>
+
     <!-- LOGRADOURO -->
     <ion-item>
       <ion-label stacked> * Logradouro: </ion-label>
       <ion-input type="text" formControlName="logradouro"></ion-input>
     </ion-item>
 
+    <p class="danger" *ngIf="formGroup.controls['logradouro'].dirty && formGroup.controls['logradouro'].errors" margin-left>
+        Valor inválido
+    </p>
+
     <!-- NUMERO -->
     <ion-item>
       <ion-label stacked> * Número: </ion-label>
       <ion-input type="text" formControlName="numero"></ion-input>
     </ion-item>
+
+    <p class="danger" *ngIf="formGroup.controls['numero'].dirty && formGroup.controls['numero'].errors" margin-left>
+        Valor inválido
+    </p>
 
     <!-- COMPLEMENTO -->
     <ion-item>
@@ -75,11 +102,19 @@
       <ion-input type="text" formControlName="cep"></ion-input>
     </ion-item>
 
+    <p class="danger" *ngIf="formGroup.controls['cep'].dirty && formGroup.controls['cep'].errors" margin-left>
+        Valor inválido
+    </p>
+
     <!-- TELEFONE 1 -->
     <ion-item>
       <ion-label stacked> * Telefone 1: </ion-label>
       <ion-input type="text" formControlName="telefone1"></ion-input>
     </ion-item>
+
+    <p class="danger" *ngIf="formGroup.controls['telefone1'].dirty && formGroup.controls['telefone1'].errors" margin-left>
+        Valor inválido
+    </p>
 
     <!-- TELEFONE 2 -->
     <ion-item>
@@ -110,6 +145,7 @@
     </ion-item>
 
     <!-- SUBMIT -->
-    <button type="submit" ion-button block> Criar conta </button>
+    <!-- [disabled]="formGroup.invalid" = Botao bloqueado enquanto nao passar na validacao -->
+    <button type="submit" ion-button block [disabled]="formGroup.invalid"> Criar conta </button>
   </form>
 </ion-content>
