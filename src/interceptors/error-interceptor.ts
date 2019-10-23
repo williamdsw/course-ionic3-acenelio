@@ -1,3 +1,4 @@
+import { FieldMessage } from './../models/field-message';
 import { StorageService } from './../services/storage.service';
 import { Injectable } from "@angular/core";
 import { HttpInterceptor, HttpRequest, HttpHandler, HttpEvent, HTTP_INTERCEPTORS } from "@angular/common/http";
@@ -7,7 +8,8 @@ import { AlertController } from 'ionic-angular';
 @Injectable ()
 export class ErrorInterceptor implements HttpInterceptor
 {
-    constructor (public storageService : StorageService, public alertControler : AlertController)
+    constructor (public storageService : StorageService, 
+                 public alertControler : AlertController)
     {}
 
     intercept (request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> 
@@ -27,9 +29,6 @@ export class ErrorInterceptor implements HttpInterceptor
                 objError = JSON.parse (objError);
             }
 
-            console.log ("Erro interceptado");
-            console.log (objError);
-
             switch (objError.status)
             {
                 case 401:
@@ -47,6 +46,12 @@ export class ErrorInterceptor implements HttpInterceptor
                 case 404:
                 {
                     this.handle404 ();
+                    break;
+                }
+
+                case 422:
+                {
+                    this.handle422 (objError);
                     break;
                 }
 
@@ -94,6 +99,19 @@ export class ErrorInterceptor implements HttpInterceptor
         alert.present ();
     }
 
+    handle422 (objError)
+    {
+        let alert = this.alertControler.create
+        ({
+            title: "Erro 422 : Validação",
+            message: this.listErrors (objError.errors),
+            enableBackdropDismiss: false,
+            buttons: [{text: "Ok"}]
+        });
+
+        alert.present ();
+    }
+
     handleDefaultError (objError)
     {
         let alert = this.alertControler.create
@@ -105,6 +123,16 @@ export class ErrorInterceptor implements HttpInterceptor
         });
 
         alert.present ();
+    }
+
+    listErrors (messages: FieldMessage[]) : string
+    {
+        let errors = "";
+        for (let index = 0; index < messages.length; index++)
+        {
+            errors += `<p><strong> ${messages[index].fieldName} </strong>: ${messages[index].message}</p>`;
+        }
+        return errors;
     }
 }
 

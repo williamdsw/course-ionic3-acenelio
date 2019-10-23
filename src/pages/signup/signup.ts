@@ -1,7 +1,8 @@
+import { ClienteService } from './../../services/domain/cliente.service';
 import { CidadeDTO } from './../../models/cidade.dto';
 import { CidadeService } from './../../services/domain/cidade.service';
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, AlertController } from 'ionic-angular';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { EstadoService } from '../../services/domain/estado.service';
 import { EstadoDTO } from '../../models/estado.dto';
@@ -21,7 +22,9 @@ export class SignupPage
                public navParams: NavParams,
                public formBuilder: FormBuilder,
                public cidadeService: CidadeService, 
-               public estadoService: EstadoService) 
+               public estadoService: EstadoService,
+               public clienteService: ClienteService,
+               public alertController: AlertController) 
   {
     // Define campos do binding e tipos de validacoes
     this.formGroup = formBuilder.group (
@@ -29,7 +32,7 @@ export class SignupPage
       nome: ["Joaquim", [Validators.required, Validators.minLength (5), Validators.maxLength (120)] ],
       email: ["joaquim@gmail.com", [Validators.required, Validators.email]],
       tipoCliente: ["1", [Validators.required]],
-      cpfOuCnpj: ["86224544000152", [Validators.required, Validators.minLength (11), Validators.maxLength (14)]],
+      cpfOuCnpj: ["45166538005", [Validators.required, Validators.minLength (11), Validators.maxLength (14)]],
       senha: ["123", [Validators.required]],
       logradouro: ["Rua Via", [Validators.required]],
       numero: ["5", [Validators.required]],
@@ -57,9 +60,15 @@ export class SignupPage
      error => {})
   }
 
+  // Insere novo usuario
   signupUser ()
   {
-    console.log ("Enviou o form");
+    this.clienteService.insert (this.formGroup.value).subscribe (
+      response =>
+      {
+        this.showInsertOK ();
+      },
+      error => {})
   }
 
   // Busca cidades
@@ -73,5 +82,27 @@ export class SignupPage
         this.formGroup.controls.cidadeID.setValue (null);
       },
       error => {})
+  }
+
+  // Mostra modal de sucesso
+  showInsertOK ()
+  {
+    let alert = this.alertController.create 
+    ({
+      title: "Sucesso",
+      message: "Cadastro efetuado com sucesso!",
+      enableBackdropDismiss: false,
+      buttons: [
+      { 
+        text: "Ok", 
+        handler: () =>
+        {
+          // Desempilha a pagina
+          this.navCtrl.pop ();
+        }
+      }]
+    });
+
+    alert.present ();
   }
 }
