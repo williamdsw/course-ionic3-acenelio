@@ -33,6 +33,7 @@ export class ProdutosPage
     )
   }
 
+  // Carrega URLs das imagens
   loadImageURLs ()
   {
     this.items.forEach (item =>
@@ -44,5 +45,11 @@ export class ProdutosPage
       },
       error => {});
     });
+  }
+
+  // Empilha pagina de detalhes
+  showDetail ()
+  {
+    this.navCtrl.push ("ProdutoDetailPage");
   }
 }
