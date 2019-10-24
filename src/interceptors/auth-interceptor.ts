@@ -20,8 +20,8 @@ export class AuthInterceptor implements HttpInterceptor
         {
             // Clonando a requisicao original com header adicionado
             let bearer = `Bearer ${localUser.token}`;
-            const authRequest = request.clone (
-            {
+            const authRequest = request.clone 
+            ({
                 headers: request.headers.set ('Authorization', bearer)
             });
 

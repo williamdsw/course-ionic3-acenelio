@@ -9,9 +9,7 @@ import { Observable } from 'rxjs/Rx';
 export class CategoriaService 
 {
     constructor (public httpClient : HttpClient)
-    {
-
-    }
+    {}
 
     // nomeFuncao () : tipo de retorno
     findAll () : Observable<CategoriaDTO[]>
