@@ -20,8 +20,6 @@ export class CategoriasPage
 
   ionViewDidLoad () 
   {
-    console.log ('ionViewDidLoad CategoriasPage');
-
     // Chamando funcao do servico injetado
     this.categoriaService.findAll ().subscribe (
       response => 
@@ -31,8 +29,9 @@ export class CategoriasPage
       error => {});
   }
 
-  showProdutos ()
+  showProdutos (catID : string)
   {
-    this.navCtrl.push ("ProdutosPage");
+    // Passando parametros para proxima pagina
+    this.navCtrl.push ("ProdutosPage", {categoriaID : catID});
   }
 }
