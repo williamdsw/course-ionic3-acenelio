@@ -1,3 +1,4 @@
+import { API_CONFIG } from './../../config/api.config';
 import { ProdutoService } from './../../services/domain/produto.service';
 import { ProdutoDTO } from './../../models/produto.dto';
 import { Component } from '@angular/core';
@@ -26,8 +27,22 @@ export class ProdutosPage
       { 
         // Recuperando atributo da reposta
         this.items = response["content"];
+        this.loadImageURLs ();
       },
       error => {}
     )
+  }
+
+  loadImageURLs ()
+  {
+    this.items.forEach (item =>
+    {
+      this.produtoService.getSmallImageFromBucket (item.id).subscribe (
+      response => 
+      {
+        item.imageURL = `${API_CONFIG.bucketBaseUrl}/prod${item.id}-small.jpg`;
+      },
+      error => {});
+    });
   }
 }
