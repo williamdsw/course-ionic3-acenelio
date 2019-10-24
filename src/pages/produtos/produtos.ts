@@ -48,8 +48,8 @@ export class ProdutosPage
   }
 
   // Empilha pagina de detalhes
-  showDetail ()
+  showDetail (prodID : string)
   {
-    this.navCtrl.push ("ProdutoDetailPage");
+    this.navCtrl.push ("ProdutoDetailPage", {produtoID : prodID});
   }
 }
