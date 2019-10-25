@@ -12,6 +12,13 @@
   
   <ion-content padding>
 
+    <!-- Botao flutuante para Carrinho -->
+    <ion-fab top right edge>
+      <button navPush="CartPage" ion-fab mini>
+        <ion-icon name="cart"></ion-icon>
+      </button>
+    </ion-fab>
+
     <!-- dados sobre o produto -->
     <ion-card>
       <img [src]="item?.imageURL || 'assets/imgs/prod.jpg'">
