@@ -1,3 +1,4 @@
+import { ProdutoDTO } from './../../models/produto.dto';
 import { CartService } from './../../services/cart.service';
 import { API_CONFIG } from './../../config/api.config';
 import { ProdutoService } from './../../services/domain/produto.service';
@@ -39,5 +40,30 @@ export class CartPage
         },
         error => {})
     });
+  }
+
+  removeItem (produtoDto : ProdutoDTO)
+  {
+    this.items = this.cartService.removeProduto (produtoDto).items;
+  }
+
+  increaseQuantity (produtoDto : ProdutoDTO)
+  {
+    this.items = this.cartService.increaseQuantity (produtoDto).items;
+  }
+
+  decreaseQuantity (produtoDto : ProdutoDTO)
+  {
+    this.items = this.cartService.decreaseQuantity (produtoDto).items;
+  }
+
+  getTotal () : number
+  {
+    return this.cartService.getTotal ();
+  }
+
+  goOn ()
+  {
+    this.navCtrl.setRoot ("CategoriasPage");
   }
 }
