@@ -13,10 +13,10 @@ export class ClienteService
     {}
 
     // Encontra pelo email
-    findByEmail (email : string) : Observable<ClienteDTO>
+    findByEmail (email : string)
     {
         let url = `${API_CONFIG.baseUrl}/clientes/email?value=${email}`;
-        return this.httpClient.get<ClienteDTO> (url);
+        return this.httpClient.get (url);
     }
 
     // Recupera imagem do bucket
