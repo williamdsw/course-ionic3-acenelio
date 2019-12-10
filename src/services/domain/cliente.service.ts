@@ -19,6 +19,13 @@ export class ClienteService
         return this.httpClient.get (url);
     }
 
+    // Encontra pelo ID
+    findByID (id : string)
+    {
+        let url = `${API_CONFIG.baseUrl}/clientes/${id}`;
+        return this.httpClient.get (url);
+    }
+
     // Recupera imagem do bucket
     getImageFromBucket (id : string) : Observable<any>
     {
