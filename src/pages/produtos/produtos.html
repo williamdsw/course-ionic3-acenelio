@@ -10,6 +10,11 @@
 
 <ion-content padding>
 
+  <!-- Refresher -->
+  <ion-refresher (ionRefresh)="doRefresher ($event);">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+
   <!-- Botao flutuante para Carrinho -->
   <ion-fab top right edge>
     <button navPush="CartPage" ion-fab mini>

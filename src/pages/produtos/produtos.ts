@@ -21,20 +21,24 @@ export class ProdutosPage
 
   ionViewDidLoad () 
   {
-    let loader = this.presentLoading ();
+    this.loadData ();
+  }
+
+  private loadData () 
+  {
+    let loader = this.presentLoading();
 
     // Recuperando parametro da navegacao
     let categoriaID = this.navParams.get ("categoriaID");
     this.produtoService.findByCategoria (categoriaID).subscribe (
       response => 
-      { 
-        loader.dismiss ();
+      {
+        loader.dismiss();
         // Recuperando atributo da reposta
         this.items = response["content"];
-        this.loadImageURLs ();
-      },
-      error => { loader.dismiss (); }
-    )
+        this.loadImageURLs();
+      }, 
+      error => { loader.dismiss(); });
   }
 
   // Carrega URLs das imagens
@@ -59,12 +63,14 @@ export class ProdutosPage
 
   presentLoading ()
   {
-    let loader = this.loadingController.create 
-    ({
-      content: "Aguarde..."
-    });
-
+    let loader = this.loadingController.create ({ content: "Aguarde..." });
     loader.present ();
     return loader;
+  }
+
+  doRefresher (refresher)
+  {
+    this.loadData ();
+    setTimeout (() => { refresher.complete (); }, 1000);
   }
 }
