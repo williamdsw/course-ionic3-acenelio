@@ -22,4 +22,15 @@
   <h2 text-center> {{ clienteDto?.nome }} </h2>
   <p text-center> {{ clienteDto?.email }} </p>
 
+  <!-- Exibe foto -->
+  <ion-card>
+    <ion-card-header> Enviar imagem de perfil </ion-card-header>
+    <ion-item *ngIf="pictureString" >
+      <img [src]="pictureString">
+    </ion-item>
+    <ion-item>
+      <button ion-button block (click)="getCameraPicture ();" [disabled]="isCameraOn"> Camera </button>
+    </ion-item>
+  </ion-card>
+
 </ion-content>
