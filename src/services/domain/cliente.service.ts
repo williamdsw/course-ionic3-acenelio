@@ -1,3 +1,4 @@
+import { ImageUtilService } from './../image-util.service';
 import { StorageService } from './../storage.service';
 import { API_CONFIG } from './../../config/api.config';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
@@ -9,7 +10,8 @@ import { ClienteDTO } from '../../models/cliente.dto';
 export class ClienteService 
 {
     constructor (public httpClient : HttpClient, 
-                 public storageService : StorageService)
+                 public storageService : StorageService,
+                 public imageUtilService : ImageUtilService)
     {}
 
     // Encontra pelo email
@@ -38,6 +40,18 @@ export class ClienteService
     {
         let url = `${API_CONFIG.baseUrl}/clientes`;
         return this.httpClient.post (url, clienteDto,
+        {
+            observe: "response", responseType: "text"
+        });
+    }
+
+    uploadPicture (picture)
+    {
+        let pictureBlob = this.imageUtilService.dataURItoBlob (picture);
+        let formData : FormData = new FormData ();
+        formData.set ("file", pictureBlob, "file.png");
+        let url = `${API_CONFIG.baseUrl}/clientes/picture`;
+        return this.httpClient.post (url, formData, 
         {
             observe: "response", responseType: "text"
         });
