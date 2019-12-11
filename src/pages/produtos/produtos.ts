@@ -11,7 +11,10 @@ import { IonicPage, NavController, NavParams, LoadingController } from 'ionic-an
 })
 export class ProdutosPage 
 {
-  items : ProdutoDTO[];
+  items : ProdutoDTO[] = [];
+  page : number = 0;
+  linesPerPage : number = 10;
+
 
   constructor (public navCtrl: NavController, 
                public navParams: NavParams,
@@ -30,29 +33,33 @@ export class ProdutosPage
 
     // Recuperando parametro da navegacao
     let categoriaID = this.navParams.get ("categoriaID");
-    this.produtoService.findByCategoria (categoriaID).subscribe (
+    this.produtoService.findByCategoria (categoriaID, this.page, this.linesPerPage).subscribe (
       response => 
       {
         loader.dismiss();
+
         // Recuperando atributo da reposta
-        this.items = response["content"];
-        this.loadImageURLs();
+        let startLength = this.items.length;
+        this.items = this.items.concat (response["content"]);
+        let endLength = this.items.length - 1;
+        this.loadImageURLs(startLength, endLength);
       }, 
       error => { loader.dismiss(); });
   }
 
   // Carrega URLs das imagens
-  loadImageURLs ()
+  loadImageURLs (startIndex : number, endIndex : number)
   {
-    this.items.forEach (item =>
+    for (let index = startIndex; index <= endIndex; index++) 
     {
+      const item = this.items[index];
       this.produtoService.getSmallImageFromBucket (item.id).subscribe (
-      response => 
-      {
-        item.imageURL = `${API_CONFIG.bucketBaseUrl}/prod${item.id}-small.jpg`;
-      },
-      error => {});
-    });
+        response => 
+        {
+          item.imageURL = `${API_CONFIG.bucketBaseUrl}/prod${item.id}-small.jpg`;
+        },
+        error => {});
+    }
   }
 
   // Empilha pagina de detalhes
@@ -70,7 +77,16 @@ export class ProdutosPage
 
   doRefresher (refresher)
   {
+    this.items = [];
+    this.page = 0;
     this.loadData ();
     setTimeout (() => { refresher.complete (); }, 1000);
+  }
+
+  doInfinite (infiniteScroll)    
+  {
+    this.page++;
+    this.loadData ();
+    setTimeout (() => { infiniteScroll.complete (); }, 1000);
   }
 }

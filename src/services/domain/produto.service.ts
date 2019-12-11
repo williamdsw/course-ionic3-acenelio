@@ -15,9 +15,10 @@ export class ProdutoService
         return this.httpClient.get<ProdutoDTO> (`${API_CONFIG.baseUrl}/produtos/${produtoID}`);
     }
 
-    findByCategoria (categoriaID : string)
+    findByCategoria (categoriaID : string, page : number = 0, linesPerPage : number = 24)
     {
-        return this.httpClient.get (`${API_CONFIG.baseUrl}/produtos?categorias=${categoriaID}`);
+        let url = `${API_CONFIG.baseUrl}/produtos?categorias=${categoriaID}&page=${page}&linesPerPage=${linesPerPage}`;
+        return this.httpClient.get (url);
     }
 
     getImageFromBucket (produtoID : string) : Observable<any>
