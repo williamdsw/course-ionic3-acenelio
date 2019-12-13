@@ -88,6 +88,28 @@ export class ProfilePage
     (error) => { console.log (error); });
   }
 
+  getGalleryPicture ()
+  {
+    this.isCameraOn = true;
+
+    // Parametros default
+    const options : CameraOptions = 
+    {
+      quality: 100,
+      sourceType: this.camera.PictureSourceType.PHOTOLIBRARY,
+      destinationType: this.camera.DestinationType.DATA_URL,
+      encodingType: this.camera.EncodingType.PNG,
+      mediaType: this.camera.MediaType.PICTURE
+    };
+
+    this.camera.getPicture (options).then ((imageData) =>
+    {
+      this.pictureString = `data:image/png;base64,${imageData}`;
+      this.isCameraOn = false;
+    }, 
+    (error) => { console.log (error); });
+  }
+
   sendPicture ()
   {
     this.clienteService.uploadPicture (this.pictureString).subscribe (
