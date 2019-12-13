@@ -25,4 +25,15 @@ export class ImageUtilService
         bb.append(ab);
         return bb.getBlob(mimeString);
     }
+
+    blobToDataURI (blob)
+    {
+        return new Promise ((fulfill, reject) =>
+        {
+            let reader = new FileReader ();
+            reader.onerror = reject;
+            reader.onload = (ev) => fulfill (reader.result);
+            reader.readAsDataURL (blob);
+        });
+    }
 }

@@ -1,3 +1,4 @@
+import { ImageUtilService } from './../../services/image-util.service';
 import { API_CONFIG } from './../../config/api.config';
 import { ClienteService } from './../../services/domain/cliente.service';
 import { StorageService } from './../../services/storage.service';
@@ -5,6 +6,7 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { ClienteDTO } from '../../models/cliente.dto';
 import { CameraOptions, Camera } from '@ionic-native/camera/ngx';
+import { DomSanitizer } from '@angular/platform-browser';
 
 @IonicPage()
 @Component({
@@ -16,13 +18,18 @@ export class ProfilePage
   clienteDto : ClienteDTO;
   pictureString : string;
   isCameraOn : boolean = false;
+  profileImage;
 
   constructor (public navCtrl: NavController, 
                public navParams: NavParams, 
                public storageService: StorageService,
                public clienteService: ClienteService,
-               public camera: Camera) 
-  {}
+               public camera: Camera,
+               public imageUtilService : ImageUtilService, 
+               public domSanitizer : DomSanitizer) 
+  {
+    this.profileImage = "assets/imgs/avatar-blank.png";
+  }
 
   ionViewDidLoad () 
   {
@@ -62,8 +69,16 @@ export class ProfilePage
       response =>
       {
         this.clienteDto.imageUrl = `${API_CONFIG.bucketBaseUrl}/cp${this.clienteDto.id}.jpg`;
+        this.imageUtilService.blobToDataURI (response).then (dataURL =>
+        {
+          let str : string = dataURL as string;
+          this.profileImage = this.domSanitizer.bypassSecurityTrustUrl (str);
+        });
       },
-      error => {}
+      error => 
+      {
+        this.profileImage = "assets/imgs/avatar-blank.png";
+      }
     )
   }
 
@@ -122,7 +137,7 @@ export class ProfilePage
       response => 
       {
         this.pictureString = null;
-        this.loadData ();
+        this.getImageIfExists ();
       },
       error => {}
     )
