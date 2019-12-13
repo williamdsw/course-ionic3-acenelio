@@ -85,7 +85,10 @@ export class ProfilePage
       this.pictureString = `data:image/png;base64,${imageData}`;
       this.isCameraOn = false;
     }, 
-    (error) => { console.log (error); });
+    (error) => 
+    { 
+      this.isCameraOn = false;
+    });
   }
 
   getGalleryPicture ()
@@ -107,7 +110,10 @@ export class ProfilePage
       this.pictureString = `data:image/png;base64,${imageData}`;
       this.isCameraOn = false;
     }, 
-    (error) => { console.log (error); });
+    (error) => 
+    { 
+      this.isCameraOn = false;
+    });
   }
 
   sendPicture ()
